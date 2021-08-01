@@ -1,51 +1,51 @@
 const mysql = require('mysql');
 module.exports = {
 	//数据库配置
-	config:{
-		host     : 'localhost',
-		post     : '3306',
-		user     : 'root',
-		password : '980703',
-		database : 'sl'
+	config: {
+		host: '47.118.56.119',
+		post: '3306',
+		user: 'root',
+		password: 'w980703',
+		database: 'egg'
 	},
-	sqlConnection:function(sql,sqlArr,cb){
+	sqlConnection: function (sql, sqlArr, cb) {
 		//连接池，数据很大，减少数据查询时间
 		var pool = mysql.createPool(this.config);
-		pool.getConnection((err,conn)=>{
-			if(err){
+		pool.getConnection((err, conn) => {
+			if (err) {
 				console.log('链接失败');
 				return;
 			}
 			// console.log('链接成功');
 			//事件驱动回调
-			conn.query(sql,sqlArr,cb);
+			conn.query(sql, sqlArr, cb);
 			//释放链接
-			    conn.release();
+			conn.release();
 			//此处可能会有问题，释放掉该链接
 			// set global wait_timeout = 10;
 		})
 	},
 	//promise回调
-	SySqlConnect:function(sySql,sqlArr){
-		return new Promise((resolve,reject)=>{
+	SySqlConnect: function (sySql, sqlArr) {
+		return new Promise((resolve, reject) => {
 			var pool = mysql.createPool(this.config);
-			pool.getConnection((err,conn)=>{
-				if(err){
+			pool.getConnection((err, conn) => {
+				if (err) {
 					reject(err)
-				}else{
-					conn.query(sySql,sqlArr,(err,data)=>{
-						if(err){
+				} else {
+					conn.query(sySql, sqlArr, (err, data) => {
+						if (err) {
 							reject(err)
-						}else{
+						} else {
 							resolve(data)
 						}
 					});
 					//释放链接
-					    conn.release();
+					conn.release();
 				}
 			})
-		}).catch((err)=>{
-			console.log(err);
+		}).catch((err) => {
+				return err
 		})
 	}
 }
