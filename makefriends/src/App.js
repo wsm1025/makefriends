@@ -8,6 +8,8 @@ import Look from '@pages/look'
 import Music from '@pages/music'
 import My from '@pages/my'
 import NotFound from '@pages/NotFound'
+import UserInfo from '@pages/my/userInfo'
+import Login from '@pages/login'
 function App() {
   // 插入icon
   useEffect(() => {
@@ -21,11 +23,13 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/home"  render={(props) => <Home {...props} />}></Route>
-        <Route path="/look" render={(props) => <Look {...props} />}></Route>
-        <Route path="/music" render={(props) => <Music {...props} />}></Route>
-        <Route path="/my" render={(props) => <My {...props} />}></Route>
-        <Route path="/404" render={(props) => <NotFound {...props} />}></Route>
+        <Route path="/home"  render={(props) => <Home {...props} />}/>
+        <Route path="/look" render={(props) => <Look {...props} />}/>
+        <Route path="/music" render={(props) => <Music {...props} />}/>
+        <Route path="/my" render={(props) => <My {...props} />}/>
+        <Route path="/my/userinfo" render={(props) => <UserInfo {...props} />}/>
+        <Route path="/login" render={(props) => <Login {...props} />}/>
+        <Route path="/404" render={(props) => <NotFound {...props} />}/>
         <Redirect to="/home" from='/' exact></Redirect>
         <Redirect to='/404'/>
       </Switch>

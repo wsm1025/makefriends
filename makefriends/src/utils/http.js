@@ -1,9 +1,9 @@
-import axios from "axios";
-const request = axios.create({
+import {WAjax} from "wsm-common";
+const request = WAjax.create({
   baseURL: "/api",
   timeout: 8000,
 });
-// 设置axios拦截器: 响应拦截器
+// 设置WAjax拦截器: 响应拦截器
 request.interceptors.request.use(
   function (config) {
     // 添加请求头
