@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const vertoken = require('./util/token_vertify.js');
 
 const usersRouter = require('./routes/user');
+const basicRouter = require('./routes/basic');
 
 const app = express();
 //跨域
@@ -61,10 +62,13 @@ app.use(expressJwt({
 	secret: 'sl_vue_pc',
 	algorithms: ['HS256']
 }).unless({
-	path: ['/api/users/login'] //除了这些地址，其他的URL都需要验证
+	path: ['/api/users/login','/api/basic/iconfont','/api','/api/users'] //除了这些地址，其他的URL都需要验证
 }));
 
 app.use('/api/users', usersRouter);
+app.use('/api/basic', basicRouter);
+
+
 // 当token失效返回提示信息
 app.use(function(err, req, res, next) {
 	// console.log(err);
