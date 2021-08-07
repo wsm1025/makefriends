@@ -1,7 +1,6 @@
 import {WAjax} from "wsm-common";
 const request = WAjax.create({
   baseURL: "/api",
-  timeout: 8000,
 });
 // 设置WAjax拦截器: 响应拦截器
 request.interceptors.request.use(

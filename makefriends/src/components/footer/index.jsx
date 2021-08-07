@@ -6,7 +6,8 @@ class footer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: localDB.get('tabKey')
+      selectedTab: localDB.get('tabKey'),
+      isShow: props.location.pathname === "/login"
     };
   }
   // componentDidMount(){
@@ -18,9 +19,15 @@ class footer extends Component {
   //   //   this.props.push('home')
   //   // }
   // }
-  
+  componentWillReceiveProps(props){
+    this.setState({
+      selectedTab: props.location.pathname.split('/')[1],
+      isShow: props.location.pathname === "/login"
+    })
+  }
   render() {
     return (
+      !this.state.isShow?
       <footer >
         <TabBar
           unselectedTintColor="#949494"
@@ -34,7 +41,7 @@ class footer extends Component {
             selectedIcon={<i className="iconfont icon-shouye-copy"></i>}
             selected={this.state.selectedTab === "home"}
             onPress={(id='/home') => {
-              localDB.set('tabKey',id)
+              localDB.set('tabKey',id.split('/')[1])
               this.props.push(id)
               this.setState({
                 selectedTab: "home",
@@ -48,7 +55,7 @@ class footer extends Component {
             key="music"
             selected={this.state.selectedTab === "music"}
             onPress={(id='/music') => {
-              localDB.set('tabKey',id)
+              localDB.set('tabKey',id.split('/')[1])
               this.props.push(id)
               this.setState({
                 selectedTab: "music",
@@ -62,7 +69,7 @@ class footer extends Component {
             key="look"
             selected={this.state.selectedTab === "look"}
             onPress={(id="/look") => {
-              localDB.set('tabKey',id)
+              localDB.set('tabKey',id.split('/')[1])
               this.props.push(id)
               this.setState({
                 selectedTab: "look",
@@ -76,7 +83,7 @@ class footer extends Component {
             key="my"
             selected={this.state.selectedTab === "my"}
             onPress={(id='/my') => {
-              localDB.set('tabKey',id)
+              localDB.set('tabKey',id.split('/')[1])
               this.props.push(id)
               this.setState({
                 selectedTab: "my",
@@ -85,6 +92,8 @@ class footer extends Component {
           ></TabBar.Item>
         </TabBar>
       </footer>
+      :
+      ''
     );
   }
 }

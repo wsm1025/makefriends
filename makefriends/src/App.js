@@ -2,7 +2,7 @@ import './App.css';
 import Footer from '@components/footer/index'
 import { IconFontItem } from '@api/basic/IconfontApi'
 import {useEffect} from 'react'
-import {Route,Switch,Redirect,useHistory} from 'react-router-dom'
+import {Route,Switch,Redirect,useHistory,withRouter} from 'react-router-dom'
 import Home from '@pages/home'
 import Look from '@pages/look'
 import Music from '@pages/music'
@@ -26,7 +26,7 @@ function App() {
         <Route path="/home"  render={(props) => <Home {...props} />}/>
         <Route path="/look" render={(props) => <Look {...props} />}/>
         <Route path="/music" render={(props) => <Music {...props} />}/>
-        <Route path="/my" render={(props) => <My {...props} />}/>
+        <Route path="/my" render={(props) => <My {...props} />} exact/>
         <Route path="/my/userinfo" render={(props) => <UserInfo {...props} />}/>
         <Route path="/login" render={(props) => <Login {...props} />}/>
         <Route path="/404" render={(props) => <NotFound {...props} />}/>
@@ -38,4 +38,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App);

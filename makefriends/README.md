@@ -68,3 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### 生命周期补充
+[https://www.cnblogs.com/gdsblog/p/7348375.html]
+![](https://images2017.cnblogs.com/blog/1106982/201708/1106982-20170811224737742-1564011484.jpg)

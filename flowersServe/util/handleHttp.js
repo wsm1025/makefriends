@@ -1,4 +1,4 @@
-module.exports = (res, successData, successCode, successMsg) => {
+module.exports = (res, successData={sqlMessage:'服务超时'}, successCode, successMsg) => {
   console.log(successData);
   if (successData.hasOwnProperty("code")) {
     return res.send({

@@ -127,10 +127,12 @@ function My(props) {
       console.log("账号登出");
     }else{
       props.history.push('/login')
+      localDB.set('tabKey','login')
     }
   }
   function changeUserInfo(){
     props.history.push('/my/userinfo')
+
   }
 }
 
