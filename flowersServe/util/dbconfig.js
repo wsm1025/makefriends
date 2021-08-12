@@ -2,11 +2,11 @@ const mysql = require('mysql');
 module.exports = {
 	//数据库配置
 	config: {
-		host: '47.118.56.119',
-		post: '3306',
-		user: 'root',
-		password: 'w980703',
-		database: 'egg'
+		host: 'x x x x',
+		post: 'x x x',
+		user: 'x x x',
+		password: 'x x x',
+		database: 'x x x'
 	},
 	sqlConnection: function (sql, sqlArr, cb) {
 		//连接池，数据很大，减少数据查询时间
