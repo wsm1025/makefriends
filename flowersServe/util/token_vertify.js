@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var signkey = 'sl_vue_pc';
+var signkey = 'wsm_react_salt_981025';
 
 exports.setToken = function(userName,passWord){
 	return new Promise((resolve,reject)=>{

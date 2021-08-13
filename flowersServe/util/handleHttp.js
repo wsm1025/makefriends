@@ -1,14 +1,26 @@
-module.exports = (res, successData={sqlMessage:'服务超时'}, successCode, successMsg) => {
-  console.log(successData);
-  if (successData.hasOwnProperty("code")) {
+const dbConfig = require("./dbconfig");
+func = async() => {
+  let data = await dbConfig.sqlConnection(sql, sqlArr);
+};
+Func = async (sql,sqlArr,res,code,msg,info=null) => {
+  try{
+  let data = await dbConfig.SySqlConnect(sql, sqlArr);
+  if(data.hasOwnProperty('sqlState')){
     return res.send({
-      data: successData.sqlMessage,
-      code: 500,
+      data:data.sqlMessage,
+      successData: "服务超时"
     });
   }
   res.send({
-    data: successData,
-    code: successCode,
-    text: successMsg,
-  });
+    data: data.length === 1 ? data[0] : data,
+    code: data.length !== 0 ? code[0] : code[1],
+    msg: data.length !== 0 ? msg[0] : msg[1],
+    info:data.length !== 0 ? info :null
+  })
+}catch(err){
+  res.send({
+    err
+  })
+}
 };
+module.exports = { func, Func };

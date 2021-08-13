@@ -1,3 +1,3 @@
 module.exports =  user = {
-    'ICON':'select * from urls'
+    'ICON':'select  *  from urls'
   }

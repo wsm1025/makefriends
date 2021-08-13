@@ -1,11 +1,19 @@
 import { NavBar, NoticeBar, Icon, Popover } from "antd-mobile";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {localDB} from 'wsm-common'
 import "./index.css";
 function My(props) {
   const [theme, SatateTheme] = useState(true);
   const [menu, SatateMenu] = useState(false);
+  const [userinfo, StateUserInfo] = useState({
+    avatar:'https://img1.baidu.com/it/u=1834859148,419625166&fm=26&fmt=auto&gp=0.jpg',
+    user_name:'makeFriends',
+    signature:'交友'
+  });
   const Item = Popover.Item;
+  useEffect(() => {
+    getInfo()
+  }, [userinfo.avatar,userinfo.user_name,userinfo.signature]);// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
       <NavBar
@@ -74,14 +82,14 @@ function My(props) {
       <div className="userInfo">
         <img
           className="userInfo-avatar"
-          src="https://img1.baidu.com/it/u=1834859148,419625166&fm=26&fmt=auto&gp=0.jpg"
+          src={userinfo.avatar}
           alt=""
           onClick={changeUserInfo}
         />
         <i className="iconfont icon-bi" onClick={changeUserInfo}></i>
-        <p className="userInfo-name">泯酱吖</p>
+        <p className="userInfo-name">{userinfo.user_name}</p>
         <p className="userInfo-signature">
-          我是汪世民，我热爱学习，虽然学习很苦
+        {userinfo.signature}
         </p>
       </div>
       <div className="menu">
@@ -120,19 +128,34 @@ function My(props) {
     SatateTheme(!theme);
   }
   function onSelect(opt) {
+    console.log(opt.props.value);
     if (opt.props.value === "close") {
       SatateMenu(false);
     } else if(opt.props.value ==='logout'){
       SatateMenu(false);
+      localDB.del('makeFriendsToken')
+      localDB.del('info')
       console.log("账号登出");
     }else{
       props.history.push('/login')
       localDB.set('tabKey','login')
     }
+    getInfo()
   }
   function changeUserInfo(){
     props.history.push('/my/userinfo')
-
+  }
+  function getInfo(){
+    const userInfo = JSON.parse(localDB.get('info'))|| {
+      avatar:'https://img1.baidu.com/it/u=1834859148,419625166&fm=26&fmt=auto&gp=0.jpg',
+      user_name:'makeFriends',
+      signature:'交友'
+    }
+    StateUserInfo({
+      avatar:userInfo.avatar,
+      user_name:userInfo.user_name,
+      signature:userInfo.signature
+    })
   }
 }
 
