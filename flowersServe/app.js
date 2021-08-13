@@ -62,7 +62,7 @@ app.use(expressJwt({
 	secret: 'sl_vue_pc',
 	algorithms: ['HS256']
 }).unless({
-	path: ['/api/users/login','/api/basic/iconfont','/api','/api/users'] //除了这些地址，其他的URL都需要验证
+	path: ['/api/users/login','/api/basic/iconfont','/api/users/getAttribute','/api','/api/users'] //除了这些地址，其他的URL都需要验证
 }));
 
 app.use('/api/users', usersRouter);

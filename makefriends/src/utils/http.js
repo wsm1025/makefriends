@@ -1,4 +1,4 @@
-import {WAjax} from "wsm-common";
+import {WAjax,localDB} from "wsm-common";
 const request = WAjax.create({
   baseURL: "/api",
 });
@@ -7,7 +7,7 @@ request.interceptors.request.use(
   function (config) {
     // 添加请求头
     // 这里的config包含每次请求的内容
-    const token = window.localStorage.getItem("auth_token");
+    const token = localDB.get("makeFriendsToken");
     if (token) {
       // 添加headers
       config.headers.Authorization = `${token}`;
@@ -24,16 +24,16 @@ request.interceptors.response.use(
   function (response) {
     switch (response.data.code) {
       case "401":
-        localStorage.removeItem("auth_token");
+        localDB.del("makeFriendsToken");
         break;
       case "403":
-        localStorage.removeItem("auth_token");
+        localDB.del("makeFriendsToken");
         break;
       case "404":
-        localStorage.removeItem("auth_token");
+        localDB.del("makeFriendsToken");
         break;
       case "500":
-        localStorage.removeItem("auth_token");
+        localDB.del("makeFriendsToken");
         break;
       default:
         return response;
