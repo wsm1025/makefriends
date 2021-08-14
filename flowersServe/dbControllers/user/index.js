@@ -13,9 +13,12 @@ login = async (req, res) => {
 	handleHttp.Func(sql,sqlArr,res,code=[1,0],msg=['登陆成功',"登陆失败"],info={token})
 }
 getAttribute=async(req,res)=>{
-	const sql = userModel.getAttribute;
-	const {key} = req.query
-	let sqlArr = [key,req.data.userName];
+	// 不可查询pass_word
+	let arr = req.query.key.split(',');
+	if(arr.includes('pass_word'))arr.splice(arr.indexOf('pass_word'),1)
+	arr.join(',');
+	const sql = `select ${arr} from users WHERE user_name='${req.data.userName}'`
+	const sqlArr = [];
 	handleHttp.Func(sql,sqlArr,res,code=[1,0],msg=['查询成功',"查询失败"])
 }
 

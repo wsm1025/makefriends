@@ -3,7 +3,6 @@ func = async() => {
   let data = await dbConfig.sqlConnection(sql, sqlArr);
 };
 Func = async (sql,sqlArr,res,code,msg,info=null) => {
-  console.log(sqlArr)
   try{
   let data = await dbConfig.SySqlConnect(sql, sqlArr);
   if(data.hasOwnProperty('sqlState')){

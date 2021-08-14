@@ -2,7 +2,6 @@ import { NavBar, NoticeBar, Icon, Popover } from "antd-mobile";
 import { useState,useEffect } from "react";
 import {localDB} from 'wsm-common'
 import "./index.css";
-import {getAttribute} from '../../api/basic/LoginApi'
 function My(props) {
   const [theme, SatateTheme] = useState(true);
   const [menu, SatateMenu] = useState(false);
@@ -147,9 +146,6 @@ function My(props) {
     props.history.push('/my/userinfo')
   }
   function getInfo(){
-    getAttribute('pass_word').then(res=>{
-      console.log(res);
-    })
     const userInfo = JSON.parse(localDB.get('info'))|| {
       avatar:'https://img1.baidu.com/it/u=1834859148,419625166&fm=26&fmt=auto&gp=0.jpg',
       user_name:'makeFriends',
