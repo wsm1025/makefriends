@@ -1,6 +1,10 @@
 const dbConfig = require("./dbconfig");
-func = async() => {
-  let data = await dbConfig.sqlConnection(sql, sqlArr);
+func = async(sql,sqlArr) => {
+  try {
+    await dbConfig.sqlConnection(sql, sqlArr);
+  } catch (error) {
+    console.log(error);
+  }
 };
 Func = async (sql,sqlArr,res,code,msg,info=null) => {
   try{
@@ -8,7 +12,8 @@ Func = async (sql,sqlArr,res,code,msg,info=null) => {
   if(data.hasOwnProperty('sqlState')){
     return res.send({
       data:data.sqlMessage,
-      successData: "服务超时"
+      msg: "服务超时" + data.sqlMessage,
+      code:0
     });
   }
   res.send({

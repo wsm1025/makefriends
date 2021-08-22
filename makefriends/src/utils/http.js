@@ -24,16 +24,16 @@ request.interceptors.response.use(
   function (response) {
     switch (response.data.code) {
       case "401":
-        localDB.del("makeFriendsToken");
+        localDB.del("makeFriendsToken,info");
         break;
       case "403":
-        localDB.del("makeFriendsToken");
+        localDB.del("makeFriendsToken,info");
         break;
       case "404":
-        localDB.del("makeFriendsToken");
+        localDB.del("makeFriendsToken,info");
         break;
       case "500":
-        localDB.del("makeFriendsToken");
+        localDB.del("makeFriendsToken,info");
         break;
       default:
         return response;

@@ -2,11 +2,11 @@ const mysql = require('mysql');
 module.exports = {
 	//数据库配置
 	config: {
-		host: '47.118.56.119',
+		host: '127.0.0.1',
 		post: '3306',
 		user: 'root',
-		password: 'w980703',
-		database: 'egg'
+		password: '980703',
+		database: 'makefriends'
 	},
 	sqlConnection: function (sql, sqlArr, cb) {
 		//连接池，数据很大，减少数据查询时间
@@ -16,7 +16,6 @@ module.exports = {
 				console.log('链接失败');
 				return;
 			}
-			// console.log('链接成功');
 			//事件驱动回调
 			conn.query(sql, sqlArr, cb);
 			//释放链接
