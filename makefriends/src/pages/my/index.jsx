@@ -73,12 +73,15 @@ function My(props) {
       >
         个人中心
       </NavBar>
+      {!JSON.parse(localDB?.get('info'))?.email?
       <NoticeBar
         mode="closable"
         icon={<Icon type="cross-circle-o" size="xxs" />}
       >
         填写邮箱可以绑定你的账号，防止账号丢失哦
       </NoticeBar>
+      :''
+      }
       <div className="userInfo">
         <img
           className="userInfo-avatar"

@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
-import { NavBar, Icon, List, InputItem, Toast, ImagePicker, Button, DatePicker, Picker, Stepper  } from 'antd-mobile';
+import { NavBar, Icon, List, InputItem, Toast, ImagePicker, Button, DatePicker, Picker, Stepper } from 'antd-mobile';
 import { localDB } from 'wsm-common'
-import { getAttribute, avatarImgUpload } from '@api/basic/LoginApi'
+import Preview  from '@components/preview/index'
+import { getAttribute, avatarImgUpload, updateInfo as updateInfoApi } from '@api/basic/LoginApi'
 import "./index.css";
 export default class userinfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      hasError: false,
+      imgisShow:false,
       age: '',
       avatar: [{}],
+      imgURL: [],
       birthday: null,
       email: '',
       home: '',
@@ -61,37 +65,43 @@ export default class userinfo extends Component {
             value={state.user_name}
           >用户名</InputItem>
           <InputItem
-            type="email"
-            disabled
+            type="text"
             value={state.email}
+            error={this.state.hasError}
+            onErrorClick={this.onErrorClick}
             placeholder="xxx@126.com"
+            onChange={this.emailChange}
           >email</InputItem>
           <Picker
             data={state.selectSex}
             value={state.sex}
             cols={1}
-            onChange={this.onChangeSex}
+            onChange={(e) => {
+              this.setState({
+                sex: e
+              })
+            }}
           >
-          <List.Item arrow="horizontal">性别</List.Item>
+            <List.Item arrow="horizontal">性别</List.Item>
           </Picker>
           <List.Item
-          wrap
-          extra={
-            <Stepper
-              style={{ width: '100%', minWidth: '100px'}}
-              showNumber
-              max={100}
-              min={10}
-              value={state.age}
-              onChange={e=>this.setState({age:e})}
-            />}
-        >
-       年龄
-        </List.Item>
+            wrap
+            extra={
+              <Stepper
+                style={{ width: '100%', minWidth: '100px' }}
+                showNumber
+                max={100}
+                min={10}
+                value={state.age}
+                onChange={e => this.setState({ age: e })}
+              />}
+          >
+            年龄
+          </List.Item>
           <InputItem
             type="text"
             value={state.signature}
-            onChange={e=>this.setState({signature:e})}
+            onChange={e => this.setState({ signature: e })}
           >个性签名</InputItem>
           <DatePicker
             mode="date"
@@ -105,28 +115,28 @@ export default class userinfo extends Component {
           <InputItem
             type="text"
             value={state.home}
-            onChange={e=>this.setState({home:e})}
+            onChange={e => this.setState({ home: e })}
           >住址</InputItem>
           <List.Item
-          className='label'
-          wrap
-          extra={
-            state.label.split(',').map(val=>{
-              return (
-                <span style={{padding:'0 4px'}}>{val}</span>
-              )
-            })
-           }
-        >
-       标签
-        </List.Item>
+            className='label'
+            wrap
+            extra={
+              state.label.split(',').map(val => {
+                return (
+                  <span key={Math.random()} style={{ padding: '0 4px' }}>{val}</span>
+                )
+              })
+            }
+          >
+            标签
+          </List.Item>
           <div className='am-list-item am-input-item am-list-item-middle'>
             <div className='am-input-label am-input-label-5'>头像</div>
           </div>
           <ImagePicker
             files={state.avatar}
             onChange={this.onChange}
-            onImageClick={(index, fs) => console.log(index, fs)}
+            onImageClick={(index, fs) =>this.setState({imgisShow:true})}
             selectable={state.avatar.length < 1}
             multiple={this.state.multiple}
           />
@@ -135,6 +145,7 @@ export default class userinfo extends Component {
             value={state.label}
           >标签</InputItem> */}
         </List>
+        <Preview isshow={state.imgisShow} url={state.imgURL}/>
       </div>
     )
   }
@@ -146,6 +157,7 @@ export default class userinfo extends Component {
         this.setState({
           age: info.age,
           avatar: [{ url: info.avatar, id: Math.random() }],
+          imgURL: info.avatar,
           birthday: new Date(Date.parse(info.birthday)),
           email: info.email,
           home: info.home,
@@ -177,12 +189,54 @@ export default class userinfo extends Component {
       }
     }
   }
-  onChangeSex = (val) => {
-    this.setState({
-      sex: val
-    });
-  };
-  updateInfo=()=>{
-    console.log(this.state)
+  updateInfo = () => {
+    if (!this.state.avatar.length) {
+      this.setState({
+        avatar: [{
+          url: this.state.imgURL,
+          id: Math.random()
+        }]
+      }, () => {
+        this.update_repete()
+      })
+    }else{
+    this.update_repete()
+    }
+  }
+  update_repete = async () => {
+    if(this.state.hasError){
+      return Toast.info('请输入正确的邮箱');
+    }
+    delete this.state.selectSex;
+    try {
+      const { data: { code, msg } } = await updateInfoApi(this.state);
+      if (code) {
+        Toast.success(msg)
+        setTimeout(() => {
+          this.props.history.replace('/my')
+        }, 1000);
+      } else {
+        Toast.fail(msg)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  emailChange = (e) => {
+    if (/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(e)){
+      this.setState({
+        hasError: false,
+      });
+    } else {
+      this.setState({
+        hasError: true,
+      });
+    }
+    this.setState({ email: e });
+  }
+  onErrorClick = () => {
+    if (this.state.hasError) {
+      Toast.info('请输入正确的邮箱');
+    }
   }
 }

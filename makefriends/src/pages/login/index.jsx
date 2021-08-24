@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { NavBar, Icon, Button, WingBlank, InputItem, Toast } from "antd-mobile";
 import "./index.css";
 import Password from "./password";
-import { authCode,localDB } from "wsm-common";
-import {Login as UserLogin} from '../../api/basic/LoginApi'
+import { authCode, localDB } from "wsm-common";
+import { Login as UserLogin } from '../../api/basic/LoginApi'
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +12,7 @@ export default class Login extends Component {
       authcode: null,
       usernamehasError: false,
       authcodehasError: false,
-      authcodema:null
+      authcodema: null
     };
     this.username = "";
     this.authcode = "";
@@ -36,9 +36,9 @@ export default class Login extends Component {
     };
   }
   componentDidMount() {
-    authCode(this.options,res=>{
+    authCode(this.options, res => {
       this.setState({
-        authcodema : res
+        authcodema: res
       })
     });
   }
@@ -136,7 +136,7 @@ export default class Login extends Component {
       </div>
     );
   }
-  login =async () => {
+  login = async () => {
     if (
       !this.state.usernamehasError &&
       this.state.username &&
@@ -144,21 +144,23 @@ export default class Login extends Component {
       !this.state.authcodehasError &&
       this.password.Password.state.value.length >= 6
     ) {
-      if(this.state.authcode.toLocaleLowerCase() === this.state.authcodema.toLocaleLowerCase()){
-       let {data:{data,code,msg,info:{token}}} = await UserLogin({
-          user_name:this.state.username,
-          pass_word:this.password.Password.state.value
-        })
-        if(msg==='登陆成功'&&code){
-          Toast.success(msg)
-          localDB.set('makeFriendsToken',token)
-          localDB.set('makeFriendsToken',token)
-          localDB.set('info',JSON.stringify(data))
-          this.props.history.replace('/home')
-        }else{
+      if (this.state.authcode.toLocaleLowerCase() === this.state.authcodema.toLocaleLowerCase()) {
+        try {
+          let { data: { data, code, msg, info: { token } } } = await UserLogin({
+            user_name: this.state.username,
+            pass_word: this.password.Password.state.value
+          })
+          if (msg === '登陆成功' && code) {
+            Toast.success(msg)
+            localDB.set('makeFriendsToken', token)
+            localDB.set('makeFriendsToken', token)
+            localDB.set('info', JSON.stringify(data))
+            this.props.history.replace('/home')
+          }
+        } catch (err) {
           Toast.fail("登陆失败")
         }
-      }else{
+      } else {
         Toast.fail('验证码错误！！！')
       }
     } else {

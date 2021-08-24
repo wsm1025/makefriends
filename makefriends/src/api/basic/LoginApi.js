@@ -7,8 +7,11 @@ const avatarImgUpload = async (key) => {
     const res = await http.post(`/users/avatarImgUpload`, formData)
     return res
 }
+const updateInfo = (userInfo) => http.post('/users/updateInfo', userInfo)
+
 export {
     Login,
     getAttribute,
-    avatarImgUpload
+    avatarImgUpload,
+    updateInfo
 }

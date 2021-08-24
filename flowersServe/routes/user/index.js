@@ -17,6 +17,8 @@ let upload = multer({
 router.post('/login',user.login)//登录
 router.get('/getAttribute',user.getAttribute)//获取字段
 router.post('/avatarImgUpload',upload.single('file'),user.avatarImgUpload)//头像上传
+router.post('/updateInfo',user.updateInfo)//用户数据更新
+
 
 
 module.exports = router;

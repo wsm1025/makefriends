@@ -1,8 +1,8 @@
+import './index.css'
 function music() {
     return (
-        <div>
-            music
-        </div>
+        // <iframe src='http://taizonga.top/wy' title={Math.random()}/>
+        <p>music</p>
     );
   }
   export default music;
