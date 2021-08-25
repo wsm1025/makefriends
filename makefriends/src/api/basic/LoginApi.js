@@ -8,10 +8,15 @@ const avatarImgUpload = async (key) => {
     return res
 }
 const updateInfo = (userInfo) => http.post('/users/updateInfo', userInfo)
+const getPassword = (key) => http.post('/users/getPasswrod',{password:key})
+
+const updatePasswordApi = (pass_word) => http.post('/users/updatePassword',{pass_word})
 
 export {
     Login,
     getAttribute,
     avatarImgUpload,
-    updateInfo
+    updateInfo,
+    getPassword,
+    updatePasswordApi
 }

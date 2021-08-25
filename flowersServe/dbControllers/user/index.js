@@ -41,12 +41,22 @@ avatarImgUpload = async (req, res) => {
 		})
 	}
 }
-updateInfo = async (req,res)=>{
+updateInfo = async (req, res) => {
 	let key = req.body;
 	const sql = userModel.UPDATE;
 	// update users set updated_at=?, avatar=?,birthday=?,home=?,label=?,sex=?,signature=?,age=? where user_name=
-	const sqlArr=[key.email,moment().format('YYYY-MM-DD HH:mm:ss'),key.avatar[0].url,moment(key.birthday).format('YYYY-MM-DD'),key.home,key.label,key.sex - 0,key.signature,key.age,`${req.data.userName}`]
+	const sqlArr = [key.email, moment().format('YYYY-MM-DD HH:mm:ss'), key.avatar[0].url, moment(key.birthday).format('YYYY-MM-DD'), key.home, key.label, key.sex - 0, key.signature, key.age, `${req.data.userName}`]
 	handleHttp.Func(sql, sqlArr, res, code = [1, 0], msg = ['更新数据成功', "更新数据失败"])
+}
+getPasswrod = async (req, res) => {
+	const sql = userModel.PASSWORD;
+	const sqlArr = [ `${req.data.userName}`, `${req.body.password}`]
+	handleHttp.Func(sql, sqlArr, res, code = [1, 0], msg = ['查询密码成功', "查询密码失败"])
+}
+updatePassword=async(req,res)=>{
+	const sql = userModel.PASSWORDUPDATE;
+	const sqlArr = [req.body.pass_word,moment().format('YYYY-MM-DD HH:mm:ss'),`${req.data.userName}`]
+	handleHttp.Func(sql, sqlArr, res, code = [1, 0], msg = ['更新密码成功', "更新密码失败"])
 }
 
 
@@ -54,5 +64,7 @@ module.exports = {
 	login,
 	getAttribute,
 	avatarImgUpload,
-	updateInfo
+	updateInfo,
+	getPasswrod,
+	updatePassword
 }

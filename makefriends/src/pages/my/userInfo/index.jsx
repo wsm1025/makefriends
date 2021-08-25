@@ -119,6 +119,7 @@ export default class userinfo extends Component {
           >住址</InputItem>
           <List.Item
             className='label'
+            onClick={()=>{this.props.history.push('/my/labelUpdate')}}
             wrap
             extra={
               state.label.split(',').map(val => {

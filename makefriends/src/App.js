@@ -10,6 +10,8 @@ import My from '@pages/my'
 import NotFound from '@pages/NotFound'
 import UserInfo from '@pages/my/userInfo'
 import Login from '@pages/login'
+import UpdatePassword from '@pages/my/updatePassword'
+import LabelUpdate from '@pages/my/labelUpdate'
 import { localDB } from 'wsm-common'
 function App() {
   // 插入icon
@@ -39,6 +41,8 @@ function App() {
         <Route path="/music" render={(props) => <Music {...props} />} />
         <Route path="/my" render={(props) => <My {...props} />} exact />
         <Route path="/my/userinfo" render={(props) => <UserInfo {...props} />} />
+        <Route path="/my/updatePassword" render={(props) => <UpdatePassword {...props} />} />
+        <Route path="/my/labelUpdate" render={(props) => <LabelUpdate {...props} />} />
         <Route path="/login" render={(props) => <Login {...props} />} />
         <Route path="/404" render={(props) => <NotFound {...props} />} />
         <Redirect to="/home" from='/' exact></Redirect>

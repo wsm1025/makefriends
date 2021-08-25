@@ -124,6 +124,13 @@ function My(props) {
             <Icon type="right" />
           </div>
         </div>
+        <div className="menuItem" onClick={()=>{props.history.push('/my/updatePassword')}}>
+          <i className="iconfont icon-mima" style={{color:'pink'}}></i>
+          <div className="menuItm-content">
+            修改密码
+            <Icon type="right" />
+          </div>
+        </div>
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavBar, Icon, Button, WingBlank, InputItem, Toast } from "antd-mobile";
+import MD5 from 'MD5';
 import "./index.css";
 import Password from "./password";
 import { authCode, localDB } from "wsm-common";
@@ -148,7 +149,7 @@ export default class Login extends Component {
         try {
           let { data: { data, code, msg, info: { token } } } = await UserLogin({
             user_name: this.state.username,
-            pass_word: this.password.Password.state.value
+            pass_word:MD5(MD5(this.password.Password.state.value))
           })
           if (msg === '登陆成功' && code) {
             Toast.success(msg)

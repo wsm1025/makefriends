@@ -18,6 +18,9 @@ router.post('/login',user.login)//登录
 router.get('/getAttribute',user.getAttribute)//获取字段
 router.post('/avatarImgUpload',upload.single('file'),user.avatarImgUpload)//头像上传
 router.post('/updateInfo',user.updateInfo)//用户数据更新
+router.post('/getPasswrod',user.getPasswrod)//用户密码查询
+router.post('/updatePassword',user.updatePassword)//更新密码updatePassword
+
 
 
 
