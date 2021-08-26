@@ -1,19 +1,19 @@
 import { NavBar, NoticeBar, Icon, Popover } from "antd-mobile";
-import { useState,useEffect } from "react";
-import {localDB} from 'wsm-common'
+import { useState, useEffect } from "react";
+import { localDB } from 'wsm-common'
 import "./index.css";
 function My(props) {
   const [theme, SatateTheme] = useState(true);
   const [menu, SatateMenu] = useState(false);
   const [userinfo, StateUserInfo] = useState({
-    avatar:'https://img1.baidu.com/it/u=1834859148,419625166&fm=26&fmt=auto&gp=0.jpg',
-    user_name:'makeFriends',
-    signature:'交友'
+    avatar: 'https://img1.baidu.com/it/u=1834859148,419625166&fm=26&fmt=auto&gp=0.jpg',
+    user_name: 'makeFriends',
+    signature: '交友'
   });
   const Item = Popover.Item;
   useEffect(() => {
     getInfo()
-  }, [userinfo.avatar,userinfo.user_name,userinfo.signature]);// eslint-disable-line react-hooks/exhaustive-deps
+  }, [userinfo.avatar, userinfo.user_name, userinfo.signature]);// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
       <NavBar
@@ -33,16 +33,16 @@ function My(props) {
             overlayStyle={{ color: "currentColor" }}
             visible={menu}
             overlay={[
-                localDB.get('makeFriendsToken')
-                ? 
+              localDB.get('makeFriendsToken')
+                ?
                 <Item key="4" value="logout" >
-                登出
+                  登出
                 </Item>
                 :
                 <Item key="6" value="login">
-                登陆
+                  登陆
                 </Item>,
-              <Item key="5" value="close" style={{ whiteSpace: "nowrap" }}>
+              <Item key="5" value="close" style={{ whiteSpace: "nowrap", display: isMobile() ? 'none' : 'block' }}>
                 关闭弹窗
               </Item>,
             ]}
@@ -73,14 +73,14 @@ function My(props) {
       >
         个人中心
       </NavBar>
-      {!JSON.parse(localDB?.get('info'))?.email?
-      <NoticeBar
-        mode="closable"
-        icon={<Icon type="cross-circle-o" size="xxs" />}
-      >
-        填写邮箱可以绑定你的账号，防止账号丢失哦
-      </NoticeBar>
-      :''
+      {!JSON.parse(localDB?.get('info'))?.email ?
+        <NoticeBar
+          mode="closable"
+          icon={<Icon type="cross-circle-o" size="xxs" />}
+        >
+          填写邮箱可以绑定你的账号，防止账号丢失哦
+        </NoticeBar>
+        : ''
       }
       <div className="userInfo">
         <img
@@ -92,12 +92,12 @@ function My(props) {
         <i className="iconfont icon-bi" onClick={changeUserInfo}></i>
         <p className="userInfo-name">{userinfo.user_name}</p>
         <p className="userInfo-signature">
-        {userinfo.signature}
+          {userinfo.signature}
         </p>
       </div>
       <div className="menu">
         <div className="menuItem">
-          <i className="iconfont icon-tiezi" style={{color:'orange'}}></i>
+          <i className="iconfont icon-tiezi" style={{ color: 'orange' }}></i>
           <div className="menuItm-content">
             我的帖子
             <Icon type="right" />
@@ -111,21 +111,21 @@ function My(props) {
           </div>
         </div>
         <div className="menuItem">
-          <i className="iconfont icon-shoucang" style={{color:'red'}}></i>
+          <i className="iconfont icon-shoucang" style={{ color: 'red' }}></i>
           <div className="menuItm-content">
             我的收藏
             <Icon type="right" />
           </div>
         </div>
         <div className="menuItem">
-          <i className="iconfont icon-history" style={{color:'purple'}}></i>
+          <i className="iconfont icon-history" style={{ color: 'purple' }}></i>
           <div className="menuItm-content">
             浏览历史
             <Icon type="right" />
           </div>
         </div>
-        <div className="menuItem" onClick={()=>{props.history.push('/my/updatePassword')}}>
-          <i className="iconfont icon-mima" style={{color:'pink'}}></i>
+        <div className="menuItem" onClick={() => { props.history.push('/my/updatePassword') }}>
+          <i className="iconfont icon-mima" style={{ color: 'pink' }}></i>
           <div className="menuItm-content">
             修改密码
             <Icon type="right" />
@@ -141,31 +141,35 @@ function My(props) {
     console.log(opt.props.value);
     if (opt.props.value === "close") {
       SatateMenu(false);
-    } else if(opt.props.value ==='logout'){
+    } else if (opt.props.value === 'logout') {
       SatateMenu(false);
       localDB.del('makeFriendsToken')
       localDB.del('info')
       console.log("账号登出");
-    }else{
+    } else {
       props.history.push('/login')
-      localDB.set('tabKey','login')
+      localDB.set('tabKey', 'login')
     }
     getInfo()
   }
-  function changeUserInfo(){
+  function changeUserInfo() {
     props.history.push('/my/userinfo')
   }
-  function getInfo(){
-    const userInfo = JSON.parse(localDB.get('info'))|| {
-      avatar:'https://img1.baidu.com/it/u=1834859148,419625166&fm=26&fmt=auto&gp=0.jpg',
-      user_name:'makeFriends',
-      signature:'交友'
+  function getInfo() {
+    const userInfo = JSON.parse(localDB.get('info')) || {
+      avatar: 'https://img1.baidu.com/it/u=1834859148,419625166&fm=26&fmt=auto&gp=0.jpg',
+      user_name: 'makeFriends',
+      signature: '交友'
     }
     StateUserInfo({
-      avatar:userInfo.avatar,
-      user_name:userInfo.user_name,
-      signature:userInfo.signature
+      avatar: userInfo.avatar,
+      user_name: userInfo.user_name,
+      signature: userInfo.signature
     })
+  }
+  function isMobile() {
+    var mobile = navigator.userAgent.match(/iphone|android|phone|mobile|wap|netfront|x11|java|operamobi|operamini|ucweb|windowsce|symbian|symbianos|series|webos|sony|blackberry|dopod|nokia|samsung|palmsource|xda|pieplus|meizu|midp|cldc|motorola|foma|docomo|up.browser|up.link|blazer|helio|hosin|huawei|novarra|coolpad|webos|techfaith|palmsource|alcatel|amoi|ktouch|nexian|ericsson|philips|sagem|wellcom|bunjalloo|maui|smartphone|iemobile|spice|bird|zte-|longcos|pantech|gionee|portalmmm|jig browser|hiptop|benq|haier|^lct|320x320|240x320|176x220/i) != null;
+    return mobile;
   }
 }
 

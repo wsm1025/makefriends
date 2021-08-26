@@ -17,7 +17,14 @@ request.interceptors.request.use(
     return config;
   },
   function (err) {
-    return Promise.reject(err);
+    return {
+      data:{
+        code:0,
+        data:0,
+        info:0,
+        msg:"接口error"
+      }
+    }
   }
 );
 request.interceptors.response.use(
@@ -40,7 +47,14 @@ request.interceptors.response.use(
     }
   },
   function (error) {
-    return Promise.reject(error);
+   return {
+     data:{
+       code:0,
+       data:0,
+       info:0,
+       msg:"接口error"
+     }
+   }
   }
 );
 

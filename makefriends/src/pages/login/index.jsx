@@ -50,7 +50,7 @@ export default class Login extends Component {
           mode="light"
           icon={<Icon key={Math.random()} type="left" />}
           onLeftClick={() => this.props.history.go(-1)}
-          rightContent={[<Icon key={Math.random()} type={"loading"} />]}
+          rightContent={[ <Button size='small' key={Math.random()} onClick={()=>this.props.history.push('/register')}>注册</Button>]}
         >
           登陆
         </NavBar>
@@ -90,7 +90,7 @@ export default class Login extends Component {
             >
               账号/邮箱
             </InputItem>
-            <Password ref={(el) => (this.password = el)} />
+            <Password name='密码' placeholder='请输入密码' ref={(el) => (this.password = el)} />
             <InputItem
               ref={(el) => (this.authcode = el)}
               key={Math.random()}
@@ -157,6 +157,8 @@ export default class Login extends Component {
             localDB.set('makeFriendsToken', token)
             localDB.set('info', JSON.stringify(data))
             this.props.history.replace('/home')
+          }else{
+          Toast.fail(msg)
           }
         } catch (err) {
           Toast.fail("登陆失败")

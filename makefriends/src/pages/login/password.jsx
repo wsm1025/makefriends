@@ -20,7 +20,7 @@ class Password extends Component {
         autoComplete='off'
         key={Math.random()}
         type={this.state.isPassword ? "password" : "text"}
-        placeholder="请输入密码"
+        placeholder={this.props.placeholder}
         value={this.state.value}
         onErrorClick={()=>{Toast.info('密码至少6位')}}
         error={this.state.hasError}
@@ -60,7 +60,7 @@ class Password extends Component {
           ></i>
         }
       >
-        密码
+        {this.props.name}
       </InputItem>
     );
   }

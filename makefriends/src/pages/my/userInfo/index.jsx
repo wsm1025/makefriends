@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { NavBar, Icon, List, InputItem, Toast, ImagePicker, Button, DatePicker, Picker, Stepper } from 'antd-mobile';
+import { NavBar, Icon, List, InputItem, Toast, ImagePicker, Button, Tag, DatePicker, Picker, Stepper, Drawer, SearchBar } from 'antd-mobile';
 import { localDB } from 'wsm-common'
-import Preview  from '@components/preview/index'
+import Preview from '@components/preview/index'
 import { getAttribute, avatarImgUpload, updateInfo as updateInfoApi } from '@api/basic/LoginApi'
 import "./index.css";
 export default class userinfo extends Component {
@@ -9,8 +9,10 @@ export default class userinfo extends Component {
     super(props);
     this.state = {
       hasError: false,
-      imgisShow:false,
+      imgisShow: false,
       age: '',
+      Addlabel: '',
+      open: false,
       avatar: [{}],
       imgURL: [],
       birthday: null,
@@ -48,6 +50,20 @@ export default class userinfo extends Component {
   }
   render() {
     const state = this.state;
+    const sidebar = (<List>
+      <SearchBar placeholder="输入关键字" value={state.Addlabel} onChange={e => this.setState({ Addlabel: e })} onSubmit={this.addLabel} onClear={this.clearLabel} maxLength={4} />
+      {state.label.split(',').map((i, index) => {
+        if (index < 6) {
+          return (
+            <span key={index} onClick={this.delLabel}>
+              <Tag style={{ margin: '9px' }} 
+              >{i}</Tag>
+            </span>
+          )
+        }
+        return null
+      })}
+    </List>);
     return (
       <div className='form-edit'>
         <NavBar
@@ -119,7 +135,7 @@ export default class userinfo extends Component {
           >住址</InputItem>
           <List.Item
             className='label'
-            onClick={()=>{this.props.history.push('/my/labelUpdate')}}
+            onClick={() => { this.setState({ open: true }) }}
             wrap
             extra={
               state.label.split(',').map(val => {
@@ -137,16 +153,28 @@ export default class userinfo extends Component {
           <ImagePicker
             files={state.avatar}
             onChange={this.onChange}
-            onImageClick={(index, fs) =>this.setState({imgisShow:true})}
+            onImageClick={(index, fs) => this.setState({ imgisShow: true })}
             selectable={state.avatar.length < 1}
             multiple={this.state.multiple}
           />
-          {/* <InputItem
-            type="text"
-            value={state.label}
-          >标签</InputItem> */}
         </List>
-        <Preview isshow={state.imgisShow} url={state.imgURL}/>
+        <Preview isshow={state.imgisShow} url={state.imgURL} />
+        {
+          this.state.open ?
+            <Drawer
+              className="my-drawer"
+              style={{ minHeight: document.documentElement.clientHeight }}
+              enableDragHandle
+              contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42 }}
+              sidebar={sidebar}
+              open={state.open}
+              onOpenChange={() => { this.setState({ open: false }) }}
+            >
+              ''
+            </Drawer>
+            : ""
+        }
+
       </div>
     )
   }
@@ -200,12 +228,12 @@ export default class userinfo extends Component {
       }, () => {
         this.update_repete()
       })
-    }else{
-    this.update_repete()
+    } else {
+      this.update_repete()
     }
   }
   update_repete = async () => {
-    if(this.state.hasError){
+    if (this.state.hasError) {
       return Toast.info('请输入正确的邮箱');
     }
     delete this.state.selectSex;
@@ -224,7 +252,7 @@ export default class userinfo extends Component {
     }
   }
   emailChange = (e) => {
-    if (/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(e)){
+    if (/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(e)) {
       this.setState({
         hasError: false,
       });
@@ -239,5 +267,31 @@ export default class userinfo extends Component {
     if (this.state.hasError) {
       Toast.info('请输入正确的邮箱');
     }
+  }
+  addLabel = (e) => {
+    var res = this.state.label
+    if(this.state.label.split(',').length>=5){
+      return Toast.info('至多五个标签')
+    }
+    this.setState({
+      label: res + ',' + e
+    })
+    this.clearLabel()
+  }
+  clearLabel = () => {
+    this.setState({
+      Addlabel: ''
+    })
+  }
+  delLabel=(e)=>{
+    var res = this.state.label.split(',')
+    res.splice( res.indexOf(e.target.innerText) ,1)
+    res = res.join(',')
+    if(this.state.label.split(',').length<=1){
+      return Toast.info('至少留一个标签')
+    }
+    this.setState({
+      label: res
+    })
   }
 }

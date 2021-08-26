@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
 export default class preview extends Component {
-  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
     this.state = {

@@ -1,4 +1,16 @@
-.am-list-body{
+.form-edit >.am-list >.am-list-body{
   height: 506px;
   overflow-y: auto;
+}
+.my-drawer .am-list {
+  height: 100%;
+  overflow-y: hidden;
+  min-width: 280px;
+  max-width: 280px;
+}
+.my-drawer .am-list .am-list-body{
+  min-width: 280px;
+  max-width: 280px;
+  height: 100%;
+  overflow-y: hidden;
 }
