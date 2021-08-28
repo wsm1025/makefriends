@@ -84,6 +84,6 @@ app.use(function (err, req, res, next) {
 });
 
 
-server.listen('3002', () => {
+server.listen('3001', () => {
 	console.log('服务启动');
 })
