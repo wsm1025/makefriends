@@ -2,7 +2,7 @@ const mysql = require('mysql');
 module.exports = {
 	//数据库配置
 	config: {
-		host: '127.0.0.1',
+		host: '47.118.56.119',
 		post: '3306',
 		user: 'root',
 		password: '980703',
