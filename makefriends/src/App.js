@@ -11,7 +11,7 @@ import NotFound from '@pages/NotFound'
 import UserInfo from '@pages/my/userInfo'
 import Login from '@pages/login'
 import Register from '@pages/register'
-
+import ForgetPassword from '@pages/forgetPassword'
 import UpdatePassword from '@pages/my/updatePassword'
 import { localDB } from 'wsm-common'
 function App() {
@@ -45,6 +45,7 @@ function App() {
         <Route path="/my/updatePassword" render={(props) => <UpdatePassword {...props} />} />
         <Route path="/login" render={(props) => <Login {...props} />} />
         <Route path="/register" render={(props) => <Register {...props} />} />
+        <Route path="/forgetPassword" render={(props) => <ForgetPassword {...props} />} />
         <Route path="/404" render={(props) => <NotFound {...props} />} />
         <Redirect to="/home" from='/' exact></Redirect>
         <Redirect to='/404' />

@@ -5,7 +5,7 @@ class Password extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPassword: true,
+      isPassword: this.props.text ? !this.props.text: true,
       value: null,
       hasError: false,
     };
@@ -22,10 +22,11 @@ class Password extends Component {
         type={this.state.isPassword ? "password" : "text"}
         placeholder={this.props.placeholder}
         value={this.state.value}
-        onErrorClick={()=>{Toast.info('密码至少6位')}}
+        onErrorClick={()=>{Toast.info(this.props.errmsg?this.props.errmsg:'密码至少6位')}}
         error={this.state.hasError}
+        maxLength={this.props.maxLength?this.props.maxLength:20}
         onChange={(val) => {
-          if (val.length < 6) {
+          if (val.length < (this.props.maxLength?this.props.maxLength:6)) {
             this.setState({
               hasError: true,
             });
@@ -45,6 +46,7 @@ class Password extends Component {
           );
         }}
         extra={
+          !this.props.slot?
           <i
             className={
               this.state.isPassword
@@ -57,10 +59,11 @@ class Password extends Component {
                 isPassword: !this.state.isPassword,
               });
             }}
-          ></i>
+          ></i>:
+          this.props.slot
         }
       >
-        {this.props.name}
+        {this.props.name|| '密码'}
       </InputItem>
     );
   }

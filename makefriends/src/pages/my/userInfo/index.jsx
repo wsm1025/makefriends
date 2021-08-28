@@ -179,7 +179,7 @@ export default class userinfo extends Component {
     )
   }
   getinfo = () => {
-    getAttribute('age,avatar,birthday,email,home,label,sex,signature,user_name').then(res => {
+    getAttribute('age,avatar,birthday,email,home,label,sex,signature,user_name,id',JSON.parse(localDB.get('info')).id).then(res => {
       if (res.data.code) {
         let info = res.data.data;
         localDB.set('info', JSON.stringify(info))
@@ -209,7 +209,6 @@ export default class userinfo extends Component {
       const result = await avatarImgUpload(files[0].file)
       if (result.data.code) {
         Toast.success(result.data.msg)
-        this.getinfo()
         this.setState({
           avatar: [{ url: result.data.data, id: Math.random() }],
         })
@@ -236,11 +235,11 @@ export default class userinfo extends Component {
     if (this.state.hasError) {
       return Toast.info('请输入正确的邮箱');
     }
-    delete this.state.selectSex;
     try {
       const { data: { code, msg } } = await updateInfoApi(this.state);
       if (code) {
         Toast.success(msg)
+        this.getinfo()
         setTimeout(() => {
           this.props.history.replace('/my')
         }, 1000);
@@ -248,7 +247,7 @@ export default class userinfo extends Component {
         Toast.fail(msg)
       }
     } catch (err) {
-      console.log(err)
+      Toast.fail('error')
     }
   }
   emailChange = (e) => {

@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import { NavBar, Icon, Button, WingBlank, InputItem, Toast } from "antd-mobile";
 import "./index.css";
 import Password from '@pages/login/password'
+import { register } from '@api/basic/LoginApi'
+import MD5 from 'MD5'
 export default class Register extends Component {
   constructor(props) {
     super(props)
     this.state = {
       user_name: '',
     }
-    this.password='';
-    this.passwordAgain=''
+    this.password = '';
+    this.passwordAgain = ''
   }
   render() {
     const state = this.state;
@@ -32,7 +34,7 @@ export default class Register extends Component {
               onChange={e => this.setState({ user_name: e })}
             >账户</InputItem>
             <Password name='密码' placeholder='请输入密码' ref={(el) => (this.password = el)} />
-            <Password name='确认密码'  placeholder='请再次输入密码' ref={(el) => (this.passwordAgain = el)} />
+            <Password name='确认密码' placeholder='请再次输入密码' ref={(el) => (this.passwordAgain = el)} />
             {/* <InputItem
             clear
             placeholder="请输入验证码"
@@ -58,14 +60,29 @@ export default class Register extends Component {
     )
   }
   login = () => {
+    if(this.state.user_name.length<=5){
+     return Toast.fail('用户名至少6位')
+    }
     if (!this.state.user_name || !this.password.Password.state.value) {
       Toast.fail('用户名或密码为空')
-    } else if ( this.passwordAgain.Password.state.value !== this.password.Password.state.value) {
+    } else if (this.passwordAgain.Password.state.value !== this.password.Password.state.value) {
       Toast.fail('两次密码不一致')
-    }else if(this.passwordAgain.Password.state.value.length<=6 || this.password.Password.state.value.length<=6){
+    } else if (this.passwordAgain.Password.state.value.length < 6 || this.password.Password.state.value.length < 6) {
       Toast.fail('密码长度不足')
-    }else{
-      console.log(1)
+    } else {
+      register(
+        {
+          user_name: this.state.user_name,
+          pass_word: MD5(MD5(this.passwordAgain.Password.state.value))
+        }
+      ).then(res => {
+        if (res.data.code) {
+          Toast.success(res.data.msg)
+          this.props.history.push('/login')
+        } else {
+          Toast.fail(res.data.msg)
+        }
+      })
     }
   }
   reset = () => {

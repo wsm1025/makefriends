@@ -28,7 +28,7 @@ export default class Login extends Component {
       el: "#authcode",
       height: 40,
       width: 80,
-      num: 5,
+      num: 4,
       position: {
         x: 40,
         y: 30,
@@ -121,6 +121,9 @@ export default class Login extends Component {
               验证码
             </InputItem>
             <div id="authcode"></div>
+            <div style={{textAlign:'right',fontSize:15,color:'white',margin:'4px 0'}} onClick={()=>{this.props.history.push('/forgetPassword')}}>
+              忘记密码
+            </div>
             <div className="button">
               <Button
                 style={{ backgroundColor: "#45b97c" }}
