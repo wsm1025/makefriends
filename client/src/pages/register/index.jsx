@@ -3,7 +3,7 @@ import { NavBar, Icon, Button, WingBlank, InputItem, Toast } from "antd-mobile";
 import "./index.css";
 import Password from '@pages/login/password'
 import { register } from '@api/basic/LoginApi'
-import MD5 from 'MD5'
+import MD5 from 'md5'
 export default class Register extends Component {
   constructor(props) {
     super(props)

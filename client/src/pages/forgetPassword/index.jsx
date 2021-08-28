@@ -3,7 +3,7 @@ import Password from "../login/password";
 import { useRef, useState } from 'react'
 import './index.css'
 import { checkEmail, updatePasswordFromCode } from '@api/basic/LoginApi'
-import MD5 from 'MD5'
+import MD5 from 'md5'
 function Index(props) {
   const password = useRef(null);
   const code = useRef(null);

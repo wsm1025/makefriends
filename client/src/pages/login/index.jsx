@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavBar, Icon, Button, WingBlank, InputItem, Toast } from "antd-mobile";
-import MD5 from 'MD5';
+import MD5 from 'md5';
 import "./index.css";
 import Password from "./password";
 import { authCode, localDB } from "wsm-common";
