@@ -2,7 +2,7 @@ const mysql = require('mysql');
 module.exports = {
 
 	config: {
-		host: '47.118.56.119',
+		host: 'localhost',
 		post: '3306',
 		user: 'root',
 		password: '980703',
