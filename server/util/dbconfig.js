@@ -8,7 +8,6 @@ module.exports = {
 		password: '980703',
 		database: 'makefriends'
 	},
-	//promise回调
 	SySqlConnect: function (sySql, sqlArr) {
 		return new Promise((resolve, reject) => {
 			var pool = mysql.createPool(this.config);
