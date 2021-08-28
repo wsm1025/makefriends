@@ -39,7 +39,7 @@ function App() {
       <Switch>
         <Route path="/home" render={(props) => <Home {...props} />} />
         <Route path="/look" render={(props) => <Look {...props} />} />
-        <Route path="/music" render={(props) => <Music {...props} />} />
+        <Route path="/music" render={(props) => <Music {...props} />} exact />
         <Route path="/my" render={(props) => <My {...props} />} exact />
         <Route path="/my/userinfo" render={(props) => <UserInfo {...props} />} />
         <Route path="/my/updatePassword" render={(props) => <UpdatePassword {...props} />} />

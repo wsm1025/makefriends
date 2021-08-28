@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavBar, Icon, Button, InputItem, Toast } from "antd-mobile";
+import { NavBar, Icon, Button, Toast } from "antd-mobile";
 import { getPassword, updatePasswordApi  } from '@api/basic/LoginApi'
 import MD5 from 'md5';
 import './updatePassword.css'

@@ -84,6 +84,6 @@ app.use(function (err, req, res, next) {
 });
 
 
-server.listen('3002', () => {
-	console.log('服务启动');
+server.listen('3000', () => {
+	console.log('服务启动,端口3300');
 })
