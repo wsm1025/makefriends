@@ -3,8 +3,7 @@ const express = require('express');
 const expressJwt = require('express-jwt')
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-
+const errorHandle = require('./util/errorHandle') 
 //引入token文件
 const vertoken = require('./util/token_vertify.js');
 
@@ -72,18 +71,18 @@ app.use(expressJwt({
 app.use('/api/users', usersRouter);
 app.use('/api/basic', basicRouter);
 
-
-// 当token失效返回提示信息
-app.use(function (err, req, res, next) {
-	console.log(err);
-	if (err.inner.message == "jwt expired") {
-		return res.status(200).send({ text: "toke过期", code: '403' });
-	} else {
-		return res.status(200).send({ text: "toke验证失败", code: '401' });
-	}
-});
+app.use(errorHandle())
+// // 当token失效返回提示信息
+// app.use(function (err, req, res, next) {
+// 	console.log(err);
+// 	if (err.inner.message == "jwt expired") {
+// 		return res.status(200).send({ text: "toke过期", code: '403' });
+// 	} else {
+// 		return res.status(200).send({ text: "toke验证失败", code: '401' });
+// 	}
+// });
 
 
 server.listen('3000', () => {
-	console.log('服务启动,端口3300');
+	console.log('服务启动,端口3000');
 })

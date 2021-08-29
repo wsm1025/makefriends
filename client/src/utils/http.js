@@ -1,4 +1,4 @@
-import {WAjax,localDB} from "wsm-common";
+import { WAjax, localDB } from "wsm-common";
 const request = WAjax.create({
   baseURL: "/api",
 });
@@ -12,17 +12,17 @@ request.interceptors.request.use(
       // 添加headers
       config.headers.Authorization = `${token}`;
     } else {
-        
+
     }
     return config;
   },
   function (err) {
     return {
-      data:{
-        code:0,
-        data:0,
-        info:0,
-        msg:"接口error"
+      data: {
+        code: 0,
+        data: 0,
+        info: 0,
+        msg: "接口error"
       }
     }
   }
@@ -39,22 +39,21 @@ request.interceptors.response.use(
       case "404":
         localDB.del("makeFriendsToken,info");
         break;
-      case "500":
-        localDB.del("makeFriendsToken,info");
-        break;
       default:
         return response;
     }
+    return response;
   },
   function (error) {
-   return {
-     data:{
-       code:0,
-       data:0,
-       info:0,
-       msg:"接口error"
-     }
-   }
+    localDB.del("makeFriendsToken,info,icon");
+    return {
+      data: {
+        code: 0,
+        data: 0,
+        info: 0,
+        msg: "接口错误"
+      }
+    }
   }
 );
 

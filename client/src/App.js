@@ -17,7 +17,7 @@ import { localDB } from 'wsm-common'
 function App() {
   // 插入icon
   useEffect(() => {
-    if (localDB.get('icon')) {
+    if (localDB.get('icon')&&localDB.get('icon')!=='undefined') {
       console.log('icon加载local');
       const icon = document.createElement('link');
       icon.rel = 'stylesheet'

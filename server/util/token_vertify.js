@@ -6,7 +6,7 @@ exports.setToken = function(userName,passWord){
 		const token = jwt.sign({
 			userName,
 			passWord
-		},signkey,{ expiresIn:'5h'});
+		},signkey,{ expiresIn:'1h'});
 		resolve(token);
 	})
 }
