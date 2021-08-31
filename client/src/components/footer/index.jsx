@@ -7,7 +7,7 @@ class footer extends Component {
     super(props);
     this.state = {
       selectedTab: localDB.get('tabKey'),
-      isShow: props.location.pathname === "/login" || props.location.pathname === "/register"|| props.location.pathname === "/forgetPassword"|| props.location.pathname === "/music"
+      isShow: props.location.pathname === "/login" || props.location.pathname === "/register"|| props.location.pathname === "/forgetPassword"|| props.location.pathname === "/music"||props.location.pathname === "/home/publish"
     };
   }
   // componentDidMount(){
@@ -22,7 +22,7 @@ class footer extends Component {
   componentWillReceiveProps(props){
     this.setState({
       selectedTab: props.location.pathname.split('/')[1],
-      isShow: props.location.pathname === "/login"||props.location.pathname === "/register"|| props.location.pathname === "/forgetPassword"||props.location.pathname === "/music"
+      isShow: props.location.pathname === "/login"||props.location.pathname === "/register"|| props.location.pathname === "/forgetPassword"||props.location.pathname === "/music"||props.location.pathname === "/home/publish"
     })
   }
   render() {
@@ -62,7 +62,7 @@ class footer extends Component {
               });
             }}
           ></TabBar.Item>
-          <TabBar.Item
+          {/* <TabBar.Item
             icon={<i className="iconfont icon-chakan"></i>}
             selectedIcon={<i className="iconfont icon-chakan-copy"></i>}
             title="看一看"
@@ -75,7 +75,7 @@ class footer extends Component {
                 selectedTab: "look",
               });
             }}
-          ></TabBar.Item>
+          ></TabBar.Item> */}
           <TabBar.Item
             icon={<i className="iconfont icon-wode"></i>}
             selectedIcon={<i className="iconfont icon-wode-copy"></i>}

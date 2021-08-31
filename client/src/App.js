@@ -13,6 +13,7 @@ import Login from '@pages/login'
 import Register from '@pages/register'
 import ForgetPassword from '@pages/forgetPassword'
 import UpdatePassword from '@pages/my/updatePassword'
+import Publish from '@pages/home/publish'
 import { localDB } from 'wsm-common'
 function App() {
   // 插入icon
@@ -37,7 +38,8 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/home" render={(props) => <Home {...props} />} />
+        <Route path="/home" render={(props) => <Home {...props} />} exact/>
+        <Route path="/home/publish" render={(props) => <Publish {...props} />}/>
         <Route path="/look" render={(props) => <Look {...props} />} />
         <Route path="/music" render={(props) => <Music {...props} />} exact />
         <Route path="/my" render={(props) => <My {...props} />} exact />
