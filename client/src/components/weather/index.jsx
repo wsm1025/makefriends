@@ -12,17 +12,24 @@ export default class Weather extends Component {
   ];
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       weather: !props.weather.length?Weather.weather
       :[...Weather.weather,...props.weather]
     }
   }
   componentDidMount() {
-    if (!document.getElementById('w-weather-script')) {
+    if (!document.getElementById('w-weather-script-dafault')) {
+      const icon = document.createElement('script');
+      icon.setAttribute('id', 'w-weather-script-dafault');
+      icon.src = '//at.alicdn.com/t/font_2781085_74bgcbq2ka8.js';
+      console.log('加载w-weather-script-dafault')
+      document.head.appendChild(icon);
+    }
+    if(this.props?.src.length>=10&&!document.getElementById('w-weather-script')){
       const icon = document.createElement('script');
       icon.setAttribute('id', 'w-weather-script');
-      icon.src = !this.props.url?'//at.alicdn.com/t/font_2781085_74bgcbq2ka8.js':this.props.url;
+      icon.src = this.props.src;
+      console.log('加载w-weather-script')
       document.head.appendChild(icon);
     }
     const styleConfig = `
@@ -37,6 +44,7 @@ export default class Weather extends Component {
     if (!document.getElementById('w-weather-style')) {
       const style = document.createElement('style');
       style.setAttribute('id', 'w-weather-style');
+      console.log('加载w-weather-style');
       if (style.styleSheet) {
         style.styleSheet.cssText = styleConfig;
       } else {
@@ -54,7 +62,7 @@ export default class Weather extends Component {
           {
             state.weather.map((el, index) => {
               return (
-                <svg onClick={()=>(this.props.action ? this.props.action(el[Object.keys(el)[1]]) : console.log(el[Object.keys(el)[1]]))} key={index} className="icon" aria-hidden="true">
+                <svg onClick={()=>(this.props.action ? this.props.action(el[Object.keys(el)[0]]) : console.log(el[Object.keys(el)[1]]))} key={index} className="icon" aria-hidden="true">
                   <use xlinkHref={el[Object.keys(el)[0]]}></use>
                 </svg>
               )
