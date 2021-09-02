@@ -14,10 +14,12 @@ const updatePasswordApi = (pass_word) => http.post('/users/updatePassword',{pass
 const register = (userInfo) => http.post('/users/register',userInfo)
 const checkEmail = (userInfo) => http.post('/users/checkEmail',userInfo)
 const updatePasswordFromCode = (userInfo) => http.post('/users/updatePasswordFromCode',userInfo)
-
-
-
-
+const publishDetailImg = async (key) => {
+    var formData = new FormData()
+    formData.append('file', key)
+    const res = await http.post(`/users/publishDetailImg`, formData)
+    return res
+}
 export {
     Login,
     getAttribute,
@@ -27,5 +29,6 @@ export {
     updatePasswordApi,
     register,
     checkEmail,
-    updatePasswordFromCode
+    updatePasswordFromCode,
+    publishDetailImg
 }

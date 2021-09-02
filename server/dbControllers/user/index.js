@@ -156,7 +156,17 @@ updatePasswordFromCode = async (req, res, next) => {
 		next(error)
 	}
 }
-
+publishDetailImg= async (req, res, next)=>{
+	try {
+		if (req.file) {
+			Send(res, `${global.URL}/public/uploads/publish/` + req.file.filename, 1, '图片上传成功', '')
+		} else {
+			Send(res, Date.now(), 0, 'publishDetailImg函数错误', '')
+		}
+	} catch (error) {
+		next(error)
+	}
+}
 
 module.exports = {
 	login,
@@ -167,5 +177,6 @@ module.exports = {
 	updatePassword,
 	register,
 	checkEmail,
-	updatePasswordFromCode
+	updatePasswordFromCode,
+	publishDetailImg
 }

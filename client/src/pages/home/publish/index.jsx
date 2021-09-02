@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { TextareaItem, NavBar, Icon, WhiteSpace, ImagePicker, WingBlank } from 'antd-mobile';
+import { TextareaItem, NavBar, Icon, WhiteSpace, ImagePicker, WingBlank, Button, Toast } from 'antd-mobile';
 import './index.css'
 import Weather from '@components/weather'
-import {WAjax} from 'wsm-common'
+import { WAjax } from 'wsm-common'
+import {publishDetailImg} from '@api/basic/LoginApi'
 export default class Index extends Component {
   constructor(props) {
     super(props)
@@ -10,7 +11,8 @@ export default class Index extends Component {
       avatar: [],
       weather: '#icon-xiaxue',
       isShowWeather: true,
-      IPAddress:'',
+      IPAddress: '',
+      textArea:'',
       config: {
         src: '',
         weather: [],
@@ -25,9 +27,9 @@ export default class Index extends Component {
       }
     }
   }
-  componentDidMount(){
+  componentDidMount() {
     this.setState({
-      isShowWeather:false
+      isShowWeather: false
     })
     this.ip()
   }
@@ -39,6 +41,7 @@ export default class Index extends Component {
           mode="light"
           icon={<Icon key={Math.random()} type="left" />}
           onLeftClick={() => this.props.history.go(-1)}
+          rightContent={[<Button key={Math.random()} disabled={!state.textArea.length} type="primary" size="small">确认发表</Button>]}
         >
           发表
         </NavBar>
@@ -46,24 +49,24 @@ export default class Index extends Component {
         <TextareaItem
           rows={5}
           count={100}
+          onChange={e=>this.setState({textArea:e})}
         />
         <ImagePicker
           files={state.avatar}
           onChange={this.onChange}
-          onImageClick={(index, fs) => this.setState({ imgisShow: true })}
           selectable={state.avatar.length < 6}
-          multiple={this.state.multiple}
+          // multiple={this.state.multiple}
         />
-        <div style={{display:'flex',alignItems:'center' }}>
-          心情：
-          <svg className="icon" aria-hidden="true" onClick={this.changeWeather}>
-            <use xlinkHref={state.weather}></use>
-          </svg>
-        </div>
-        <div style={{display:'flex',alignItems:'center' }}>
-          定位：{state.IPAddress}
-        </div>
-        <WingBlank>
+        <WingBlank size="lg">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            心情：
+            <svg className="icon" aria-hidden="true" onClick={this.changeWeather}>
+              <use xlinkHref={state.weather}></use>
+            </svg>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            定位：{state.IPAddress}
+          </div>
           {
             state.isShowWeather ?
               <div className="weather">
@@ -75,22 +78,39 @@ export default class Index extends Component {
       </div>
     )
   }
-  changeWeather=()=>{
+  changeWeather = () => {
     this.setState({
-      isShowWeather:true
-    },()=>{
+      isShowWeather: true
+    }, () => {
       setTimeout(() => {
         this.setState({
-          isShowWeather:false
+          isShowWeather: false
         })
       }, 2000);
     })
   }
-  ip=()=>{
-    WAjax('https://tianqiapi.com/api?version=v61&appid=44148117&appsecret=cYkMG4cL').then(res=>{
+  ip = () => {
+    WAjax('https://tianqiapi.com/api?version=v61&appid=44148117&appsecret=cYkMG4cL').then(res => {
       this.setState({
-        IPAddress:res.data.city
+        IPAddress: res.data.city
       })
     })
+  }
+  onChange = async (files, type, index) => {
+    if (type === 'remove') {
+      this.setState({
+        avatar: []
+      })
+    } else if (type === 'add') {
+      const result = await publishDetailImg(files[this.state.avatar.length].file)
+      if (result.data.code) {
+        Toast.success(result.data.msg)
+        this.setState({
+          avatar: [...this.state.avatar,{ url: result.data.data, id: Math.random() }],
+        })
+      } else {
+        Toast.fail(result.data.msg)
+      }
+    }
   }
 }
