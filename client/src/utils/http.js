@@ -1,6 +1,7 @@
 import { WAjax, localDB } from "wsm-common";
+import {global} from "@/config";
 const request = WAjax.create({
-  baseURL: "/api",
+  baseURL: global.url + "/api",
 });
 // 设置WAjax拦截器: 响应拦截器
 request.interceptors.request.use(
@@ -45,7 +46,7 @@ request.interceptors.response.use(
     return response;
   },
   function (error) {
-    // localDB.del("makeFriendsToken,info,icon");
+    localDB.del("makeFriendsToken,info,icon");
     return {
       data: {
         code: 0,

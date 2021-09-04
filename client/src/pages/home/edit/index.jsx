@@ -160,7 +160,7 @@ export default class Index extends Component {
       if (res.data.code) {
         Toast.success(res.data.msg)
         setTimeout(() => {
-          this.props.history.replace(`/home/detail/${this.state.id}`)
+          this.props.history.replace(`/home/detail?id=${this.state.id}`)
         }, 500);
       } else {
         Toast.fail(res.data.msg)

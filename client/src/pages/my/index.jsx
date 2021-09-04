@@ -18,7 +18,6 @@ function My(props) {
     <>
       <NavBar
         mode="light"
-        icon={<Icon type="left" />}
         rightContent={[
           <i
             key={Math.random()}

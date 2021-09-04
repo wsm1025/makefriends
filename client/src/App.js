@@ -50,8 +50,8 @@ function App() {
       <Switch>
         <Route path="/home" render={(props) => <Home {...props} />} exact/>
         <Route path="/home/publish" render={(props) => <Publish {...props} />}/>
-        <Route path="/home/detail/:id" render={(props) => <Detail {...props} />}/>
-        <Route path="/home/edit/:id" render={(props) => <Edit {...props} />}/>
+        <Route path="/home/detail" render={(props) => <Detail {...props} />}/>
+        <Route path="/home/edit" render={(props) => <Edit {...props} />}/>
         <Route path="/look" render={(props) => <Look {...props} />} />
         <Route path="/music" render={(props) => <Music {...props} />} exact />
         <Route path="/my" render={(props) => <My {...props} />} exact />

@@ -1,5 +1,5 @@
 const global ={
-  url:'http://localhost:3000',
+  url:'http://taizonga.top:9527',
   wy:'http://taizonga.top:4000'
 }
 export{

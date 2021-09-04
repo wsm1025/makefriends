@@ -65,7 +65,7 @@ app.use(expressJwt({
 	secret: 'wsm_react_salt_981025',
 	algorithms: ['HS256']
 }).unless({
-	path: ['/api/users/login', '/api/basic/iconfont', '/api', '/api/users','/api/users/register','/api/users/checkEmail','/api/users/updatePasswordFromCode'] //除了这些地址，其他的URL都需要验证
+	path: ['/api/users/login', '/api/basic/iconfont', '/api', '/api/users','/api/users/register','/api/users/checkEmail','/api/users/updatePasswordFromCode','/api/users/publishDeatail','/api/users/publishOneDeatail'] //除了这些地址，其他的URL都需要验证
 }));
 
 app.use('/api/users', usersRouter);

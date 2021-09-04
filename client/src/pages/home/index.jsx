@@ -96,7 +96,7 @@ class Index extends Component {
         this.props.history.push('/home/publish')
     }
     detail=(id)=>{
-        this.props.history.push(`/home/detail/${id}`)
+        this.props.history.push(`/home/detail?id=${id}`)
     }
     publishDeatail = () => {
         publishDeatailApi(this.state.num, this.state.size).then(res => {

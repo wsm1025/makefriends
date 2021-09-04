@@ -7,7 +7,7 @@ export default class Index extends Component {
     super(props)
     this.state = {
       id: 0,
-      avatar: [{}],
+      avatar: [],
       weather: '#icon-xiaxue',
       IPAddress: '',
       textArea: '',
@@ -20,7 +20,7 @@ export default class Index extends Component {
 
   componentDidMount() {
     this.setState({
-      id: this.props.match.params.id
+      id: this.props.location.search.split('=')[1]
     }, () => {
       publishOneDeatail(this.state.id).then(res => {
         if (!res.data.data.hasOwnProperty('id')) {
@@ -34,7 +34,7 @@ export default class Index extends Component {
         if (res.data.code) {
           const Res = res.data.data;
           const imgs = [];
-          if(Res.imgs){
+          if (Res.imgs) {
             Res.imgs.split(',').forEach(element => {
               imgs.push({
                 id: Math.random(),
@@ -47,7 +47,7 @@ export default class Index extends Component {
             IPAddress: Res.position,
             weather: Res.weather,
             avatar: imgs,
-            isOwn: Res.user_name === JSON.parse(localStorage.getItem('info')).user_name || '',
+            isOwn: Res.user_name === localStorage.getItem('info') ? JSON.parse(localStorage.getItem('info')).user_name : '',
             isEdit: Res.isEdit,
             isDel: Res.isDel,
           })
@@ -66,10 +66,10 @@ export default class Index extends Component {
             mode="light"
             icon={<Icon key={Math.random()} type="left" />}
             onLeftClick={() => this.props.history.go(-1)}
-            rightContent={this.state.isOwn ? 
-              [state.isEdit==='false'?<Button style={{ marginRight: 10 }} key={Math.random()} type="primary" size="small" onClick={e=>this.props.history.push(`/home/edit/${this.state.id}`)}>编辑</Button>:<Button style={{ marginRight: 10 }} key={Math.random()} type="primary" size="small" disabled>已编辑</Button>,
-              <Button key={Math.random()} type="primary" size="small" onClick={this.del}>删除</Button>]
-               : ''}
+            rightContent={this.state.isOwn ?
+              [state.isEdit === 'false' ? <Button style={{ marginRight: 10 }} key={Math.random()} type="primary" size="small" onClick={() => this.props.history.push(`/home/edit/${this.state.id}`)}>编辑</Button> : <Button style={{ marginRight: 10 }} key={Math.random()} type="primary" size="small" disabled>已编辑</Button>,
+              <Button key={Math.random()} type="primary" size="small" onClick={() => this.del}>删除</Button>]
+              : ''}
           >
             详情
           </NavBar>
@@ -80,11 +80,11 @@ export default class Index extends Component {
             value={this.state.textArea}
             count={300}
           />
+          {state.avatar.length?
           <ImagePicker
             files={state.avatar}
-            selectable={this.state.avatar.length < 6}
-            multiple
           />
+          :''}
           <WingBlank size="lg">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               心情：
@@ -98,9 +98,9 @@ export default class Index extends Component {
           </WingBlank>
         </div >
         :
-    <div>
-      已被删除
-    </div>
+        <div>
+          已被删除
+        </div>
     )
   }
   del = () => {

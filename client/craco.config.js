@@ -17,17 +17,17 @@ module.exports = {
       ['@babel/plugin-proposal-decorators', { legacy: true }]
     ]
   },
-    devServer: { // 服务器配置
-        port: 9527,
-        open: true,
-        proxy:{
-          '/api': {
-            target: 'http://localhost:3000',
-            changeOrigin: true,
-            pathRewrite: {
-              '^/api': '/api'
-            }
-          }
-        }
-      },
+    // devServer: { // 服务器配置
+    //     port: 9527,
+    //     open: true,
+    //     proxy:{
+    //       '/api': {
+    //         target: 'http://localhost:3000',
+    //         changeOrigin: true,
+    //         pathRewrite: {
+    //           '^/api': '/api'
+    //         }
+    //       }
+    //     }
+    //   },
 }
