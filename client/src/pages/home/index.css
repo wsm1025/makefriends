@@ -1,0 +1,41 @@
+.home .am-navbar {
+  position: fixed;
+  top:0;
+  width: 100%;
+  /* padding-bottom: 50px; */
+}
+.content{
+  margin: 40px 0 50px 0;
+}
+.contentDetail > .imgs{
+    display: flex;
+    margin-top: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.contentDetail  .imgs img{
+  margin: 5px 5px;
+  width: 20%;
+}
+.contentDetail .info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.contentDetail .info .weather{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contentDetail .time{
+  display: flex;
+  justify-content: space-around;
+  font-size: 11px;
+  color: rgba(0,0,0,0.7);
+  border-bottom:1px solid gray;
+  padding-bottom: 10px;
+}
+.isload{
+  text-align: center;
+  margin-top: 50px;
+}

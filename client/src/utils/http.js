@@ -45,7 +45,7 @@ request.interceptors.response.use(
     return response;
   },
   function (error) {
-    localDB.del("makeFriendsToken,info,icon");
+    // localDB.del("makeFriendsToken,info,icon");
     return {
       data: {
         code: 0,

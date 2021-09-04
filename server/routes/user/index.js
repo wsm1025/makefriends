@@ -35,6 +35,16 @@ router.post('/register',user.register)//注册
 router.post('/checkEmail',user.checkEmail)//检查邮箱  
 router.post('/updatePasswordFromCode',user.updatePasswordFromCode)//验证码更新账户
 router.post('/publishDetailImg',uploadPublish.single('file'),user.publishDetailImg)//发表图片上传
+router.post('/publishContent',user.publishContent)//发表内容
+router.get('/publishDeatail',user.publishDeatail)//获取发表内容publishOneDeatail
+router.get('/publishOneDeatail',user.publishOneDeatail)//获取发表内容一个
+router.post('/delpublish',user.delpublish)//删除发表内容一个
+router.post('/publishEdit',user.publishEdit)//编辑发表内容
+
+
+
+
+
 
 
 

@@ -20,6 +20,18 @@ const publishDetailImg = async (key) => {
     const res = await http.post(`/users/publishDetailImg`, formData)
     return res
 }
+const publishContent =(data)=>http.post('/users/publishContent',data)
+
+const publishDeatail =(num,size)=>http.get(`/users/publishDeatail?num=${num}&size=${size}`)
+const publishOneDeatail =(id)=>http.get(`/users/publishOneDeatail?id=${id}`)
+const delpublish =(id)=>http.post(`/users/delpublish`,{id})
+const publishEdit =(data)=>http.post(`/users/publishEdit`,data)
+
+
+
+
+
+
 export {
     Login,
     getAttribute,
@@ -30,5 +42,10 @@ export {
     register,
     checkEmail,
     updatePasswordFromCode,
-    publishDetailImg
+    publishDetailImg,
+    publishContent,
+    publishDeatail,
+    publishOneDeatail,
+    delpublish,
+    publishEdit
 }

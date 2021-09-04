@@ -7,6 +7,7 @@ module.exports = () => {
         code: 0
       })
     } else {
+      console.log(err);
       res.status(500).send({
         data: null,
         msg: "服务超时",

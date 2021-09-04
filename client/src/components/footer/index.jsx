@@ -7,7 +7,7 @@ class footer extends Component {
     super(props);
     this.state = {
       selectedTab: localDB.get('tabKey'),
-      isShow: props.location.pathname === "/login" || props.location.pathname === "/register"|| props.location.pathname === "/forgetPassword"|| props.location.pathname === "/music"||props.location.pathname === "/home/publish"
+      isShow: props.location.pathname === "/login" || props.location.pathname === "/register"|| props.location.pathname === "/forgetPassword"|| props.location.pathname === "/music"||props.location.pathname === "/home/publish"||props.location.pathname === "/404"
     };
   }
   // componentDidMount(){
@@ -22,7 +22,7 @@ class footer extends Component {
   componentWillReceiveProps(props){
     this.setState({
       selectedTab: props.location.pathname.split('/')[1],
-      isShow: props.location.pathname === "/login"||props.location.pathname === "/register"|| props.location.pathname === "/forgetPassword"||props.location.pathname === "/music"||props.location.pathname === "/home/publish"
+      isShow: props.location.pathname === "/login"||props.location.pathname === "/register"|| props.location.pathname === "/forgetPassword"||props.location.pathname === "/music"||props.location.pathname === "/home/publish"||props.location.pathname === "/404"
     })
   }
   render() {

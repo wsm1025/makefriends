@@ -156,7 +156,7 @@ updatePasswordFromCode = async (req, res, next) => {
 		next(error)
 	}
 }
-publishDetailImg= async (req, res, next)=>{
+publishDetailImg = async (req, res, next) => {
 	try {
 		if (req.file) {
 			Send(res, `${global.URL}/public/uploads/publish/` + req.file.filename, 1, '图片上传成功', '')
@@ -167,7 +167,68 @@ publishDetailImg= async (req, res, next)=>{
 		next(error)
 	}
 }
-
+publishContent = async (req, res, next) => {
+	const data = req.body;
+	try {
+		// insert into publish(user_name,content,weather,imgs,position,isDel,isEdit,create_time,update_time) value(?,?,?,?,?,?,?,?,?)
+		const img = [];
+		data.avatar.forEach(element => {
+			img.push(element.url)
+		});
+		const sql = userModel.PUBLISH;
+		const sqlArr = [req.data.userName, data.textArea, data.weather, img.join(','), data.IPAddress, 'false', 'false', moment().format('YYYY-MM-DD HH:mm:ss'), moment().format('YYYY-MM-DD HH:mm:ss')]
+		handleHttp.Func(sql, sqlArr, res, code = [1, 0], msg = ['发表内容成功', "发表内容失败"])
+	} catch (error) {
+		next(error)
+	}
+}
+publishDeatail = async (req, res, next) => {
+	// 0 5
+	// 1 5
+	if (req.query.num >= 1) { //分页器查询数据库
+		req.query.num = (req.query.num - 1) * req.query.size + (req.query.size - 0);
+		req.query.size = (req.query.num + 1) * req.query.size
+	}
+	try {
+		const sql = userModel.PUBLISHDETAIL;
+		const sqlArr = [req.query.num - 0, req.query.size - 0]
+		handleHttp.Func(sql, sqlArr, res, code = [1, 0], msg = ['获取列表成功', "暂无数据"])
+	} catch (error) {
+		next(error)
+	}
+}
+publishOneDeatail = async (req, res, next) => {
+	try {
+		const sql = userModel.PUBLISHONEDETAIL;
+		const sqlArr = [req.query.id];
+		handleHttp.Func(sql, sqlArr, res, code = [1, 0], msg = ['获取成功', "暂无数据"])
+	} catch (error) {
+		next(error)
+	}
+}
+delpublish= async(req,res,next)=>{
+	try {
+		const sql = userModel.DELPUBLISH;
+		const sqlArr = ['true',moment().format('YYYY-MM-DD HH:mm:ss'),req.body.id];
+		handleHttp.Func(sql, sqlArr, res, code = [1, 0], msg = ['删除成功', "删除失败"])
+	} catch (error) {
+		next(error)
+	}
+}
+publishEdit= async(req,res,next)=>{
+	const data = req.body;
+	try {
+		const img = [];
+		data.avatar.forEach(element => {
+			img.push(element.url)
+		});
+		const sql = userModel.PUBLISHEDIT;
+		const sqlArr = [data.textArea, data.weather, img.join(','), data.IPAddress, 'true', moment().format('YYYY-MM-DD HH:mm:ss'), data.id]
+		handleHttp.Func(sql, sqlArr, res, code = [1, 0], msg = ['发表内容成功', "发表内容失败"])
+	} catch (error) {
+		next(error)
+	}
+}
 module.exports = {
 	login,
 	getAttribute,
@@ -178,5 +239,10 @@ module.exports = {
 	register,
 	checkEmail,
 	updatePasswordFromCode,
-	publishDetailImg
+	publishDetailImg,
+	publishContent,
+	publishDeatail,
+	publishOneDeatail,
+	delpublish,
+	publishEdit
 }

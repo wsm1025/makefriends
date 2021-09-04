@@ -11,7 +11,7 @@ function Music(props) {
           icon={<Icon type="left" />}
           onLeftClick={() => props.history.go(-1)}
         >音乐</NavBar>
-            <iframe style={{ width: '100%', height: '100%' }} src="http://taizonga.top/wy" title="wy" frameBorder="0"></iframe>
+            <iframe style={{ width: '100%', height: '100%'}} src="http://taizonga.top/wy" title="wy" frameBorder="0"></iframe>
         </>
     )
 }

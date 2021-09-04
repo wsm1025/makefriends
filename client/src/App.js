@@ -14,9 +14,19 @@ import Register from '@pages/register'
 import ForgetPassword from '@pages/forgetPassword'
 import UpdatePassword from '@pages/my/updatePassword'
 import Publish from '@pages/home/publish'
+import Detail from '@pages/home/detail'
+import Edit from '@pages/home/edit'
+
 import { localDB } from 'wsm-common'
 function App() {
   // 插入icon
+  if (!document.getElementById('w-weather-script-dafault')) {
+    const icon = document.createElement('script');
+    icon.setAttribute('id', 'w-weather-script-dafault');
+    icon.src = '//at.alicdn.com/t/font_2781085_74bgcbq2ka8.js';
+    console.log('加载w-weather-script-dafault')
+    document.head.appendChild(icon);
+  }
   useEffect(() => {
     if (localDB.get('icon')&&localDB.get('icon')!=='undefined') {
       console.log('icon加载local');
@@ -40,6 +50,8 @@ function App() {
       <Switch>
         <Route path="/home" render={(props) => <Home {...props} />} exact/>
         <Route path="/home/publish" render={(props) => <Publish {...props} />}/>
+        <Route path="/home/detail/:id" render={(props) => <Detail {...props} />}/>
+        <Route path="/home/edit/:id" render={(props) => <Edit {...props} />}/>
         <Route path="/look" render={(props) => <Look {...props} />} />
         <Route path="/music" render={(props) => <Music {...props} />} exact />
         <Route path="/my" render={(props) => <My {...props} />} exact />

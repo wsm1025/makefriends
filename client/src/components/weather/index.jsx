@@ -18,13 +18,6 @@ export default class Weather extends Component {
     }
   }
   componentDidMount() {
-    if (!document.getElementById('w-weather-script-dafault')) {
-      const icon = document.createElement('script');
-      icon.setAttribute('id', 'w-weather-script-dafault');
-      icon.src = '//at.alicdn.com/t/font_2781085_74bgcbq2ka8.js';
-      console.log('加载w-weather-script-dafault')
-      document.head.appendChild(icon);
-    }
     if(this.props?.src.length>=10&&!document.getElementById('w-weather-script')){
       const icon = document.createElement('script');
       icon.setAttribute('id', 'w-weather-script');

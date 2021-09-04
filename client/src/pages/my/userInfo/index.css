@@ -1,5 +1,11 @@
+.form-edit{
+  height: 100%;
+}
+.form-edit .am-list{
+  height: 100%;
+}
 .form-edit >.am-list >.am-list-body{
-  height: 506px;
+  height: 100%;
   overflow-y: auto;
 }
 .my-drawer .am-list {
