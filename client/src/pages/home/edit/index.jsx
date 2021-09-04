@@ -33,7 +33,7 @@ export default class Index extends Component {
     })
     this.ip()
     this.setState({
-      id: this.props.match.params.id
+      id: this.props.location.search.split('=')[1]
     }, () => {
       publishOneDeatail(this.state.id).then(res => {
         if (!res.data.data.hasOwnProperty('id')) {
