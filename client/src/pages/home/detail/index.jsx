@@ -47,7 +47,7 @@ export default class Index extends Component {
             IPAddress: Res.position,
             weather: Res.weather,
             avatar: imgs,
-            isOwn: Res.user_name === localStorage.getItem('info') ? JSON.parse(localStorage.getItem('info')).user_name : '',
+            isOwn: Res.user_name === (localStorage.getItem('info') ? JSON.parse(localStorage.getItem('info')).user_name : ''),
             isEdit: Res.isEdit,
             isDel: Res.isDel,
           })

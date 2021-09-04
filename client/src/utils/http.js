@@ -1,5 +1,7 @@
 import { WAjax, localDB } from "wsm-common";
 import {global} from "@/config";
+import {createHashHistory} from 'history'
+const history = createHashHistory()
 const request = WAjax.create({
   baseURL: global.url + "/api",
 });
@@ -31,14 +33,21 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   function (response) {
     switch (response.data.code) {
+      case 0:
+        localDB.del("makeFriendsToken,info");
+        history.push('/login');
+        break;
       case "401":
         localDB.del("makeFriendsToken,info");
+        history.push('/login');
         break;
       case "403":
         localDB.del("makeFriendsToken,info");
+        history.push('/login');
         break;
       case "404":
         localDB.del("makeFriendsToken,info");
+        history.push('/login');
         break;
       default:
         return response;
@@ -47,6 +56,7 @@ request.interceptors.response.use(
   },
   function (error) {
     localDB.del("makeFriendsToken,info,icon");
+    history.push('/login');
     return {
       data: {
         code: 0,

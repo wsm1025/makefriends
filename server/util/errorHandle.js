@@ -2,7 +2,7 @@ module.exports = () => {
   return (err, req, res, next) => {
     if (err?.code) {
       res.status(200).send({
-        data: err,
+        data: null,
         msg: "token认证失效",
         code: 0
       })
